@@ -12,16 +12,39 @@ interface RentaPeliculas{
 		return pila;
 	}
 	public static ArrayList<Pelicula> desapilar(ArrayList<Pelicula> pila){
-		pila.remove(pila.size()-1);
-		return pila;
+		if (RentaPeliculas.vacia(pila)) {
+			System.out.println("La pila esta vacia");
+			return null;
+		}else {
+			pila.remove(pila.size()-1);
+			return pila;
+		}
 	}
 	public static Pelicula cima(ArrayList<Pelicula> pila){
-		return pila.get(pila.size()-1);
+		if (RentaPeliculas.vacia(pila)) {
+			System.out.println("La pila esta vacia");
+			return null;
+		}else {
+			return pila.get(pila.size()-1);
+		}
 	}
 	public static boolean vacia(ArrayList<Pelicula> pila) {
 		return pila.isEmpty();
 	}
-	
+	public static Pelicula rentar(ArrayList<Pelicula> pila){
+		System.out.println("Rentando pelicula ...");
+		Pelicula ret =  RentaPeliculas.cima(pila);
+		System.out.println(ret==null ? "No se pudo rentar la pelicula":"pelicula rentada exitosamente");
+		return ret;
+	}
+	public static ArrayList<Pelicula> regresar(ArrayList<Pelicula> pila,Pelicula pelicula){
+		System.out.println("Regresando pelicula ...");
+		int iSize=pila.size();
+		RentaPeliculas.apilar(pila,pelicula);
+		int fSize=pila.size();
+		System.out.println((iSize+1)==fSize ? "Pelicula regresada correctamente":"No se pudo regresar la pelicula");
+		return pila;
+	}
 	
 }
 
