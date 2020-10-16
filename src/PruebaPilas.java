@@ -1,8 +1,49 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Stack;
 import java.io.*; 
 import java.util.*; 
+
+interface Validacion{
+	Scanner input = new Scanner(System.in);
+	public static int validacionNatural() {
+		int ret = 0;
+		boolean err = false;
+		do {
+			try {
+				ret = input.nextInt();
+			} catch (java.util.InputMismatchException e) {
+				System.out.println("entrada no valida, intente de nuevo:");
+				input.nextLine();
+				err=true;
+			}
+			if (ret>0) {
+				err=false;
+			}else {
+				System.out.println("solo números naturales");
+				err=true;
+			}
+		}while(err);
+		return ret;
+	}
+	public static int validacionCantidad() {
+		int ret = 0;
+		boolean err = false;
+		do {
+			try {
+				ret = input.nextInt();
+			} catch (java.util.InputMismatchException e) {
+				System.out.println("entrada no valida, intente de nuevo:");
+				input.nextLine();
+				err=true;
+			}
+			if (ret>4) {
+				err=false;
+			}else {
+				System.out.println("solo números superiores o iguales a 5");
+				err=true;
+			}
+		}while(err);
+		return ret;
+	}
+}
 
 interface RentaPeliculas{
 	public static ArrayList<Pelicula> crear(){
@@ -192,7 +233,6 @@ class ImplementacionPilaDinamica{
 			return ret;
 		}	
 	}
-	
 	public void regresar(Pelicula pelicula) {
 		Stack<Pelicula> stack = this.getStack();
 		ArrayList<Pelicula> pls = new ArrayList<>(stack);
@@ -206,10 +246,6 @@ class ImplementacionPilaDinamica{
 	public String toString() {
 		return "ImplementacionPilaDinamica [stack=" + stack + "]";
 	}
-	
-	
-	
-	
 	
 }
 
@@ -226,6 +262,33 @@ public class PruebaPilas {
 		ipd1.regresar(p2);
 		System.out.println(ipd1);
 		System.out.println(ipd1.rentar());
+		
+		byte opc=0;
+		boolean salir = false;
+		
+		do {
+			opc = (byte) Validacion.validacionNatural();
+			System.out.println("1)Cargar BD de peliculas\n2)Rentar pelicula\n3)Devolver pelicula\n4)Mostrar cantidad de peliculas disponibles para renta\n5)Salir");
+			
+			switch (opc) {
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			default:
+				System.out.println("Opcion no valida");
+				break;
+			}
+			
+			
+		} while (!salir);
+		
 		
 		//ipe1.regresar(p1);
 		//ipe1.regresar(p2);
