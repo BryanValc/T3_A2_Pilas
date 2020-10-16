@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Stack;
+import java.io.*; 
+import java.util.*; 
 
 interface RentaPeliculas{
 	public static ArrayList<Pelicula> crear(){
@@ -58,16 +60,16 @@ class Pelicula{
 		this.genero = genero;
 	}
 
-	public String getPelicula() {
+	private String getPelicula() {
 		return pelicula;
 	}
-	public void setPelicula(String pelicula) {
+	private void setPelicula(String pelicula) {
 		this.pelicula = pelicula;
 	}
-	public String getGenero() {
+	private String getGenero() {
 		return genero;
 	}
-	public void setGenero(String genero) {
+	private void setGenero(String genero) {
 		this.genero = genero;
 	}
 
@@ -153,6 +155,34 @@ class ImplementacionPilaEstatica{
 	
 }
 
+class ImplementacionPilaDinamica{
+	
+	private Stack<Pelicula> stack=new Stack<Pelicula>();
+
+	public ImplementacionPilaDinamica() {
+	}
+	public ImplementacionPilaDinamica(Stack<Pelicula> stack) {
+		this.stack = stack;
+	}
+	
+	public Stack<Pelicula> getStack() {
+		return stack;
+	}
+	public void setStack(Stack<Pelicula> stack) {
+		this.stack = stack;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return "ImplementacionPilaDinamica [stack=" + stack + "]";
+	}
+	
+	
+	
+	
+	
+}
 
 public class PruebaPilas {
 
