@@ -82,7 +82,6 @@ class ImplementacionPilaEstatica{
 	private Pelicula peliculas[];
 	private int puntero;
 	
-	
 	public ImplementacionPilaEstatica() {
 	}
 	public ImplementacionPilaEstatica(int longitud) {
@@ -107,24 +106,43 @@ class ImplementacionPilaEstatica{
 		Pelicula pls[]=this.getPeliculas();
 		return this.getPuntero()==(pls.length-1);
 	}
+	private boolean vacia() {
+		return this.getPuntero()==(-1);
+	}
 	public Pelicula rentar() {
-		ArrayList<Pelicula> pls = new ArrayList<>(Arrays.asList(this.getPeliculas()));
-		Pelicula ret = RentaPeliculas.rentar(pls);
-		pls = RentaPeliculas.desapilar(pls);
-		Pelicula[] peliculas= pls.toArray(new Pelicula[this.getPeliculas().length]);
-		this.setPuntero(this.getPuntero()-1);
-		this.setPeliculas(peliculas);
-		return ret;
+		if (this.vacia()) {
+			System.out.println("La pila esta vacia");
+			return null;
+		}else{
+			Pelicula peliculas[]=this.getPeliculas();
+			Pelicula peliculastmp[]=new Pelicula[this.getPuntero()+1];
+			for (int i = 0; i < peliculastmp.length; i++) {
+				peliculastmp[i]=peliculas[i];
+			}
+			ArrayList<Pelicula> pls = new ArrayList<>(Arrays.asList(peliculastmp));
+			Pelicula ret = RentaPeliculas.rentar(pls);
+			pls = RentaPeliculas.desapilar(pls);
+			Pelicula[] peliculasret= pls.toArray(new Pelicula[this.getPeliculas().length]);
+			this.setPeliculas(peliculasret);
+			this.setPuntero(this.getPuntero()-1);
+			return ret;
+		}
+		
 	}
 	public void regresar(Pelicula pelicula) {
 		if (this.llena()) {
 			System.out.println("La pila estatica esta llena");
 		}else {
-			ArrayList<Pelicula> pls = new ArrayList<>(Arrays.asList(this.getPeliculas())); 
+			Pelicula peliculas[]=this.getPeliculas();
+			Pelicula peliculastmp[]=new Pelicula[this.getPuntero()+1];
+			for (int i = 0; i < peliculastmp.length; i++) {
+				peliculastmp[i]=peliculas[i];
+			}
+			ArrayList<Pelicula> pls = new ArrayList<>(Arrays.asList(peliculastmp));
 			pls = RentaPeliculas.regresar(pls, pelicula);
-			Pelicula[] peliculas= pls.toArray(new Pelicula[this.getPeliculas().length]);
+			Pelicula[] peliculasret= pls.toArray(new Pelicula[this.getPeliculas().length]);
+			this.setPeliculas(peliculasret);
 			this.setPuntero(this.getPuntero()+1);
-			this.setPeliculas(peliculas);
 		}
 	}
 	
@@ -145,9 +163,24 @@ public class PruebaPilas {
 		ImplementacionPilaEstatica ipe1 = new ImplementacionPilaEstatica(10);
 		ipe1.regresar(p1);
 		ipe1.regresar(p2);
+		/*ipe1.regresar(p1);
+		ipe1.regresar(p2);
+		ipe1.regresar(p1);
+		ipe1.regresar(p2);
+		ipe1.regresar(p1);
+		ipe1.regresar(p2);
+		ipe1.regresar(p1);
+		ipe1.regresar(p2);
+		ipe1.regresar(p1);
+		ipe1.regresar(p2);
+		ipe1.rentar();
+		ipe1.rentar();
+		ipe1.rentar();*/
 		//Pelicula p2 = ipe1.rentar();
 		System.out.println(ipe1);
+		System.out.println(ipe1.rentar());
 		
+		System.out.println(ipe1);
 		
 	}
 
