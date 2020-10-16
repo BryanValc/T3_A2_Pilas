@@ -10,14 +10,14 @@ interface Validacion{
 			try {
 				ret = input.nextInt();
 			} catch (java.util.InputMismatchException e) {
-				System.out.println("entrada no valida, intente de nuevo:");
+				System.out.println("Entrada no valida, intente de nuevo:");
 				input.nextLine();
 				err=true;
 			}
 			if (ret>0) {
 				err=false;
 			}else {
-				System.out.println("solo números naturales");
+				System.out.println("Solo números naturales");
 				err=true;
 			}
 		}while(err);
@@ -30,14 +30,14 @@ interface Validacion{
 			try {
 				ret = input.nextInt();
 			} catch (java.util.InputMismatchException e) {
-				System.out.println("entrada no valida, intente de nuevo:");
+				System.out.println("Entrada no valida, intente de nuevo:");
 				input.nextLine();
 				err=true;
 			}
 			if (ret>4) {
 				err=false;
 			}else {
-				System.out.println("solo números superiores o iguales a 5");
+				System.out.println("Solo números superiores o iguales a 5");
 				err=true;
 			}
 		}while(err);
@@ -188,6 +188,9 @@ class ImplementacionPilaEstatica{
 			this.setPuntero(this.getPuntero()+1);
 		}
 	}
+	public void cantidad(){
+		System.out.println("Cantidad de peliculas disponibles: "+(puntero+1));
+	}
 	
 	@Override
 	public String toString() {
@@ -246,58 +249,115 @@ class ImplementacionPilaDinamica{
 	public String toString() {
 		return "ImplementacionPilaDinamica [stack=" + stack + "]";
 	}
-	
+	public void cantidad(){
+		System.out.println("Cantidad de peliculas disponibles: "+(this.getStack().size()));
+	}
 }
 
 public class PruebaPilas {
 
 	public static void main(String[] args) {
 		
-		Pelicula p1 = new Pelicula("Endgame","Accion");
-		Pelicula p2 = new Pelicula("Interstellar","Ciencia ficcion");
-		ImplementacionPilaEstatica ipe1 = new ImplementacionPilaEstatica(10);
+		Scanner input = new Scanner(System.in);
+		
+		ImplementacionPilaEstatica ipe1 = new ImplementacionPilaEstatica(5);
 		ImplementacionPilaDinamica ipd1 = new ImplementacionPilaDinamica();
-		ipd1.regresar(p1);
-		System.out.println(ipd1);
-		ipd1.regresar(p2);
-		System.out.println(ipd1);
-		System.out.println(ipd1.rentar());
+		ImplementacionPilaDinamica rentadas = new ImplementacionPilaDinamica();
+		Pelicula rentada = null;
 		
 		byte opc=0;
-		boolean salir = false;
+		boolean salir=false;
+		boolean salir1=false;
+		
 		
 		do {
+			System.out.println("1)Usar pila estatica\n2)Usar pila dinamica\n3)Salir");
 			opc = (byte) Validacion.validacionNatural();
-			System.out.println("1)Cargar BD de peliculas\n2)Rentar pelicula\n3)Devolver pelicula\n4)Mostrar cantidad de peliculas disponibles para renta\n5)Salir");
-			
 			switch (opc) {
 			case 1:
+				do {
+					salir=false;
+					System.out.println("1)Cargar BD de peliculas\n2)Rentar pelicula\n3)Devolver pelicula\n4)Mostrar cantidad de peliculas disponibles para renta\n5)Salir");
+					opc = (byte) Validacion.validacionNatural();
+					switch (opc) {
+					case 1:
+						System.out.println("Cantidad(minimo 5):");
+						int cnt = Validacion.validacionCantidad();
+						ipe1 = new ImplementacionPilaEstatica(cnt);
+						for(int i=0;i<cnt;i++) {
+							System.out.println("Nombre:");
+							String nombre=input.nextLine();
+							System.out.println("Genero:");
+							String genero=input.nextLine();
+							ipe1.regresar(new Pelicula(nombre,genero));
+						}
+						break;
+					case 2:
+						rentada = ipe1.rentar();
+						System.out.println(rentada);
+						break;
+					case 3:
+						ipe1.regresar(rentada);
+						break;
+					case 4:
+						ipe1.cantidad();
+						System.out.println(ipe1);
+						break;
+					case 5:
+						salir=true;
+						break;
+					default:
+						System.out.println("Opcion no valida");
+						break;
+					}
+				} while (!salir);
 				break;
 			case 2:
+				do {
+					salir=false;
+					System.out.println("1)Cargar BD de peliculas\n2)Rentar pelicula\n3)Devolver pelicula\n4)Mostrar cantidad de peliculas disponibles para renta\n5)Salir");
+					opc = (byte) Validacion.validacionNatural();
+					switch (opc) {
+					case 1:
+						System.out.println("Cantidad(minimo 5):");
+						int cnt = Validacion.validacionCantidad();
+						for(int i=0;i<cnt;i++) {
+							System.out.println("Nombre:");
+							String nombre=input.nextLine();
+							System.out.println("Genero:");
+							String genero=input.nextLine();
+							ipd1.regresar(new Pelicula(nombre,genero));
+						}
+						break;
+					case 2:
+						rentada = ipd1.rentar();
+						System.out.println(rentada);
+						break;
+					case 3:
+						ipd1.regresar(rentada);
+						break;
+					case 4:
+						ipd1.cantidad();
+						System.out.println(ipd1);
+						break;
+					case 5:
+						salir=true;
+						break;
+					default:
+						System.out.println("Opcion no valida");
+						break;
+					}
+				} while (!salir);
 				break;
 			case 3:
-				break;
-			case 4:
-				break;
-			case 5:
+				salir1=true;
 				break;
 			default:
 				System.out.println("Opcion no valida");
 				break;
 			}
-			
-			
-		} while (!salir);
-		
-		
-		//ipe1.regresar(p1);
-		//ipe1.regresar(p2);
-		
-		//System.out.println(ipe1);
-		//System.out.println(ipe1.rentar());
-		//System.out.println(ipe1);
-		
-		
+		} while (!salir1);
+		System.out.println("Fin de ejecucion");
 		
 	}
 
