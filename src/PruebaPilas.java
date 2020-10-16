@@ -165,13 +165,42 @@ class ImplementacionPilaDinamica{
 		this.stack = stack;
 	}
 	
-	public Stack<Pelicula> getStack() {
+	private Stack<Pelicula> getStack() {
 		return stack;
 	}
-	public void setStack(Stack<Pelicula> stack) {
+	private void setStack(Stack<Pelicula> stack) {
 		this.stack = stack;
 	}
 	
+	private boolean vacia() {
+		Stack<Pelicula> stack=this.getStack();
+		return stack.empty();
+	}
+	
+	public Pelicula rentar() {
+		if (this.vacia()) {
+			System.out.println("La pila esta vacia");
+			return null;
+		}else {
+			Stack<Pelicula> stack = this.getStack();
+			ArrayList<Pelicula> pls = new ArrayList<>(stack);
+			Pelicula ret = RentaPeliculas.rentar(pls);
+			pls = RentaPeliculas.desapilar(pls);
+			stack.clear();
+			stack.addAll(pls);
+			this.setStack(stack);
+			return ret;
+		}	
+	}
+	
+	public void regresar(Pelicula pelicula) {
+		Stack<Pelicula> stack = this.getStack();
+		ArrayList<Pelicula> pls = new ArrayList<>(stack);
+		pls = RentaPeliculas.regresar(pls, pelicula);
+		stack.clear();
+		stack.addAll(pls);
+		this.setStack(stack);
+	}
 	
 	@Override
 	public String toString() {
@@ -191,26 +220,21 @@ public class PruebaPilas {
 		Pelicula p1 = new Pelicula("Endgame","Accion");
 		Pelicula p2 = new Pelicula("Interstellar","Ciencia ficcion");
 		ImplementacionPilaEstatica ipe1 = new ImplementacionPilaEstatica(10);
-		ipe1.regresar(p1);
-		ipe1.regresar(p2);
-		/*ipe1.regresar(p1);
-		ipe1.regresar(p2);
-		ipe1.regresar(p1);
-		ipe1.regresar(p2);
-		ipe1.regresar(p1);
-		ipe1.regresar(p2);
-		ipe1.regresar(p1);
-		ipe1.regresar(p2);
-		ipe1.regresar(p1);
-		ipe1.regresar(p2);
-		ipe1.rentar();
-		ipe1.rentar();
-		ipe1.rentar();*/
-		//Pelicula p2 = ipe1.rentar();
-		System.out.println(ipe1);
-		System.out.println(ipe1.rentar());
+		ImplementacionPilaDinamica ipd1 = new ImplementacionPilaDinamica();
+		ipd1.regresar(p1);
+		System.out.println(ipd1);
+		ipd1.regresar(p2);
+		System.out.println(ipd1);
+		System.out.println(ipd1.rentar());
 		
-		System.out.println(ipe1);
+		//ipe1.regresar(p1);
+		//ipe1.regresar(p2);
+		
+		//System.out.println(ipe1);
+		//System.out.println(ipe1.rentar());
+		//System.out.println(ipe1);
+		
+		
 		
 	}
 
